@@ -6,6 +6,8 @@ A responsive appointment-management application that combines a browser-based fr
 
 **Live demo:** [View the AI Appointment Scheduler](https://chassbarker.github.io/ai-appointment-scheduler/)
 
+**Test automation video:** [Watch Python and Selenium sign in, create, edit, and cancel an appointment](https://www.youtube.com/watch?v=46lEfgx2a-s)
+
 ![AI Appointment Scheduler dashboard](images/ai-appointment-scheduler-dashboard.png)
 
 ## Project status
@@ -259,9 +261,9 @@ The automated test:
 4. Edits the appointment and verifies the updated name.
 5. Cancels the appointment and verifies it appears in history.
 
-The test uses explicit waits, assertions, and best-effort cleanup if a run fails. I also added a local recording mode with short pauses and best-effort masking of test account information for a screen-recorded demonstration.
+The current test uses explicit waits, assertions, unique synthetic appointment names, and best-effort cleanup if a run fails. It retries known provider-availability conflicts across candidate slots and fails on unrelated application errors. The video demonstrates the create, edit, and cancel workflow; the test and interface may have evolved since it was recorded.
 
-**Local verification:** One authenticated end-to-end test passed in 25.935 seconds with recording mode enabled (October 2026).
+**Historical local verification:** One authenticated end-to-end test passed in 25.935 seconds during the recorded demonstration in October 2026. This is a historical result, not a fresh run of the current script.
 
 To run the authenticated test from the repository root:
 
@@ -270,7 +272,6 @@ python -m pip install selenium
 $env:SCHEDULER_TEST_EMAIL = Read-Host "Enter dedicated test account email"
 $securePassword = Read-Host "Enter test account password" -AsSecureString
 $env:SCHEDULER_TEST_PASSWORD = [System.Net.NetworkCredential]::new("", $securePassword).Password
-$env:SCHEDULER_RECORDING_MODE = "1"  # Optional; adds demo pauses and best-effort masking
 python -m unittest discover -s tests -p "test_selenium_e2e.py" -v
 ```
 
